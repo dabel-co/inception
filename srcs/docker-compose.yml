@@ -1,0 +1,58 @@
+version: "3.9"
+
+volumes :
+        wordpress:
+                name:   wordpress
+                driver: local
+                driver_opts:
+                        device: /Users/david/data/wp/ #change to 42 login
+                        o:      bind
+                        type:   none
+        mariadb:
+                name:   mariadb
+                driver: local
+                driver_opts:
+                        device: /Users/david/data/db/ #change to 42 login
+                        o:      bind
+                        type:   none
+networks:
+        inception:
+                name:   inception
+services:
+        nginx:
+                container_name: nginx
+                build: ./requirements/nginx/
+                env_file:
+                        - .env
+                ports:
+                        - "443:443"
+                volumes:
+                        - wordpress:/var/www/html
+                networks:
+                        - inception
+                depends_on:
+                        - wordpress
+                restart: always
+        wordpress:
+                container_name: wordpress
+                build: ./requirements/wordpress/
+                env_file:
+                        - .env
+                volumes:
+                        - wordpress:/var/www/html
+                networks:
+                        - inception
+                depends_on:
+                        - mariadb
+                restart: always
+        mariadb:
+                container_name: mariadb
+                build: ./requirements/mariadb/
+                env_file:
+                        - .env
+                volumes:
+                        - mariadb:/var/lib/mmdb
+                networks:
+                        - inception
+                restart: always
+      
