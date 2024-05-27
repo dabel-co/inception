@@ -12,5 +12,5 @@ If you want to deploy it, remember to create a .env file with yor own variables 
 * Nginx
 * OpenSSL
 
-These solutions are for personal reference and learning purposes. 42 emphasizes the process of problem-solving. It is strongly advised to use these exercises as a guide and create your own original solutions. Learn, don't copy
+Learn, don't copy.
  
